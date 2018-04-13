@@ -1,0 +1,8 @@
+{
+  "manifest_version": 1,
+  "package_name": "saarland.cispa.artist.modules.logtimization",
+  "name": "Logtimization Module",
+  "description": "This module logs during instrumentation.",
+  "author": "Sebastian Weisgerber <weisgerber@cispa.saarland>, Oliver Schranz <oliver.schranz@cispa.saarland>, Parthipan Ramesh <parthipan.ramesh@cispa.saarland>",
+  "version": 1
+}
