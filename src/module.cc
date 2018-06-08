@@ -19,19 +19,22 @@
  *
  */
 
-#include <artist/filtering/method_name_filters.h>
+#include <artist/api/filtering/method_name_filters.h>
 
 #include "module.h"
 #include "instrumentation_pass.h"
 
 using std::make_shared;
 
-using art::WhitelistFilter;
+LogtimizationModule::LogtimizationModule(const shared_ptr<const FilesystemHelper> fs) : Module(fs) {}
 
-shared_ptr<HArtist> LogtimizationModule::createPass(const MethodInfo& method_info) const {
-  return make_shared<HLogtimization>(method_info);
+HArtist * LogtimizationModule::createPass(const MethodInfo& method_info) const {
+  return new (method_info.GetGraph()->GetArena()) HLogtimization(method_info);
 }
 
+/*
+ * No codelib needed since we do not inject any method calls but only print to logcat at compile-time.
+ */
 shared_ptr<const CodeLib> LogtimizationModule::createCodeLib() const {
   return nullptr;
 }
@@ -41,11 +44,15 @@ shared_ptr<const CodeLib> LogtimizationModule::createCodeLib() const {
  */
 unique_ptr<Filter> LogtimizationModule::getMethodFilter() const {
   const vector<const string> onCreate = {".onCreate("};
-  return unique_ptr<Filter>(new WhitelistFilter(onCreate, false, true));
+  return unique_ptr<Filter>(new MethodNameWhitelist(onCreate, false, true));
 }
 
-// the class factories
-
-extern "C" shared_ptr <art::Module> create() {
-  return make_shared<LogtimizationModule>();
+// the module factory
+extern "C" shared_ptr <Module> create(shared_ptr<const FilesystemHelper> fshelper) {
+  return make_shared<LogtimizationModule>(fshelper);
 }
+
+extern "C" ModuleId get_id() {
+  return "saarland.cispa.artist.modules.logtimization";
+}
+

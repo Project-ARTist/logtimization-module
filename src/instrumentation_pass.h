@@ -23,7 +23,7 @@
 #ifndef ART_MODULES_LOGTIMIZATION_LOGTIMIZATION_ARTIST_H_
 #define ART_MODULES_LOGTIMIZATION_LOGTIMIZATION_ARTIST_H_
 
-#include <artist/artist.h>
+#include <artist/api/modules/artist.h>
 #include <optimization.h>
 #include <driver/dex_compilation_unit.h>
 
@@ -31,10 +31,7 @@ using std::string;
 using std::vector;
 using std::shared_ptr;
 
-using art::HArtist;
-using art::MethodInfo;
-using art::DexCompilationUnit;
-using art::OptimizingCompilerStats;
+using namespace art;
 
 class HLogtimization : public HArtist {
  public:
@@ -47,7 +44,7 @@ class HLogtimization : public HArtist {
 
   ~HLogtimization() OVERRIDE;
 
-  void RunModule() OVERRIDE;
+  void RunPass() OVERRIDE;
 };
 
 #endif  // ART_MODULES_LOGTIMIZATION_LOGTIMIZATION_ARTIST_H_

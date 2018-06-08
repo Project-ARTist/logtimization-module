@@ -22,20 +22,18 @@
 #ifndef ART_MODULES_LOGTIMIZATION_LOGTIMIZATION_MODULE_H_
 #define ART_MODULES_LOGTIMIZATION_LOGTIMIZATION_MODULE_H_
 
-#include <artist/modules/module.h>
+#include <artist/api/modules/module.h>
 
-using art::Module;
-using art::MethodInfo;
-using art::HArtist;
-using art::CodeLib;
-using art::Filter;
+using namespace art;
 
 class LogtimizationModule : public Module {
-  shared_ptr<HArtist> createPass(const MethodInfo& method_info) const OVERRIDE;
+  HArtist* createPass(const MethodInfo& method_info) const OVERRIDE;
   shared_ptr<const CodeLib> createCodeLib() const OVERRIDE;
 
 
  public:
+  explicit LogtimizationModule(const shared_ptr<const FilesystemHelper> fs);
+
   unique_ptr<Filter> getMethodFilter() const OVERRIDE;
 };
 

@@ -22,8 +22,8 @@
 
 #include <runtime.h>
 
-#include <artist/env/codelib_environment.h>
-#include <artist/artist_log.h>
+#include <artist/api/env/codelib_environment.h>
+#include <artist/api/io/artist_log.h>
 
 #include "instrumentation_pass.h"
 
@@ -31,7 +31,7 @@ using std::string;
 using std::vector;
 using std::shared_ptr;
 
-using art::DexFile;
+
 
 HLogtimization::HLogtimization(const MethodInfo& method_info,
 #ifdef BUILD_MARSHMALLOW
@@ -47,7 +47,7 @@ HLogtimization::HLogtimization(const MethodInfo& method_info,
 
 HLogtimization::~HLogtimization() = default;
 
-void HLogtimization::RunModule() {
+void HLogtimization::RunPass() {
   CHECK(graph_ != nullptr);
   VLOG(artist) << "<##########################################################>";
 
